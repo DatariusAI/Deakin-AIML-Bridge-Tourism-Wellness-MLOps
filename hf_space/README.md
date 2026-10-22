@@ -4,7 +4,7 @@ emoji: 🧳
 colorFrom: blue
 colorTo: green
 sdk: docker
-app_port: 8501
+app_port: 7860
 pinned: false
 short_description: Predicts Wellness Tourism Package buyers (XGBoost)
 ---
