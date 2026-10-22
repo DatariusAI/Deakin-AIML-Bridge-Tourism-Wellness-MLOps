@@ -1,0 +1,61 @@
+name: Keep apps awake
+
+# Free Streamlit Community Cloud apps sleep after ~12 h without traffic and free
+# Hugging Face Spaces after ~48 h. This job opens both apps every 6 hours in a
+# real browser, clicks the wake-up button if an app is asleep, and keeps this
+# scheduled workflow enabled past GitHub's 60-day inactivity limit.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install headless browser
+        run: |
+          pip install playwright==1.48.0
+          python -m playwright install --with-deps chromium
+      - name: Visit both apps
+        shell: python
+        run: |
+          import time
+          from playwright.sync_api import sync_playwright
+          APPS = {
+              "Streamlit Community Cloud": "https://datariusai-tourism-wellness-mlops.streamlit.app/",
+              "Hugging Face Space": "https://datariusai-tourism-wellness-mlops.hf.space/",
+          }
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              for name, url in APPS.items():
+                  page = browser.new_page()
+                  page.goto(url, timeout=120_000)
+                  time.sleep(8)
+                  wake = page.get_by_role("button", name="Yes, get this app back up!")
+                  if wake.count():
+                      wake.first.click()
+                      print(f"{name}: was asleep, wake-up clicked")
+                      time.sleep(60)
+                  # Wait until the app UI (in any frame) shows the scoring button
+                  ok = False
+                  for _ in range(36):
+                      if any(f.locator("text=Score this lead").count() for f in page.frames):
+                          ok = True
+                          break
+                      time.sleep(5)
+                  print(f"{name}: {'awake' if ok else 'still starting'} -> {url}")
+                  page.close()
+              browser.close()
+      - name: Keep this schedule enabled beyond 60 days
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/keepalive.yml/enable"
