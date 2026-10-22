@@ -1,6 +1,6 @@
 # Wellness Tourism Package: Purchase Prediction MLOps Pipeline
 
-Deakin Applied AI Master Bridge Program · Advanced Machine Learning and MLOps · v1.0
+Deakin Applied AI Master Bridge Program · Advanced Machine Learning and MLOps · v1.1
 
 "Visit with Us" wants to know which customers will buy the new Wellness Tourism Package before calling them.
 This repo holds an end-to-end pipeline that registers the data, prepares it, tunes an XGBoost classifier with MLflow tracking,
@@ -19,10 +19,13 @@ and commits the best model back to `main`. A Streamlit app serves the model.
 |---|---|---|---|---|
 | 0.940 | 0.864 | 0.819 | 0.841 | 0.961 |
 
-## Run the app
-Streamlit Community Cloud → this repo, branch `main`, main file `tourism_project/deployment/app.py`, Python 3.11.
+## Live apps
+- Streamlit Community Cloud: https://datariusai-tourism-wellness-mlops.streamlit.app
+- Hugging Face Space: https://huggingface.co/spaces/DatariusAI/tourism-wellness-mlops (Docker; `hf_space/Dockerfile`)
+
+`.github/workflows/keepalive.yml` opens both apps every 6 hours so they do not sleep.
 
 Locally: `pip install -r tourism_project/deployment/requirements.txt && streamlit run tourism_project/deployment/app.py`
 
 ## Notebook
-`notebooks/Tourism_Wellness_MLOps_Notebook_v1.0.ipynb` contains every script plus the executed local run.
+`notebooks/Tourism_Wellness_MLOps_Notebook_v1.1.ipynb` (presentation in `docs/`) contains every script plus the executed local run.
