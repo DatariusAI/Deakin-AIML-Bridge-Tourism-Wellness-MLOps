@@ -1,6 +1,6 @@
 # Wellness Tourism Package: Purchase Prediction MLOps Pipeline
 
-Deakin Applied AI Master Bridge Program · Advanced Machine Learning and MLOps · v1.1
+Deakin Applied AI Master Bridge Program · Advanced Machine Learning and MLOps · v1.2
 
 "Visit with Us" wants to know which customers will buy the new Wellness Tourism Package before calling them.
 This repo holds an end-to-end pipeline that registers the data, prepares it, tunes an XGBoost classifier with MLflow tracking,
@@ -28,4 +28,4 @@ and commits the best model back to `main`. A Streamlit app serves the model.
 Locally: `pip install -r tourism_project/deployment/requirements.txt && streamlit run tourism_project/deployment/app.py`
 
 ## Notebook
-`notebooks/Tourism_Wellness_MLOps_Notebook_v1.1.ipynb` (presentation in `docs/`) contains every script plus the executed local run.
+`notebooks/Tourism_Wellness_MLOps_Notebook_v1.2.ipynb` (presentation in `docs/`) contains every script plus the executed local run.
