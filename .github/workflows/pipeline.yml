@@ -9,6 +9,12 @@ on:
 permissions:
   contents: write
 
+# Only the newest run on main finishes; older queued runs are cancelled so two
+# runs never race to commit the model.
+concurrency:
+  group: tourism-pipeline-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
 
   register-dataset:
