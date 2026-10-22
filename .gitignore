@@ -1,0 +1,7 @@
+Xtrain.csv
+Xtest.csv
+ytrain.csv
+ytest.csv
+mlruns/
+__pycache__/
+.venv*/
